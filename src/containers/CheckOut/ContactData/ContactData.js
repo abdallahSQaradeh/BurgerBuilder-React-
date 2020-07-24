@@ -5,6 +5,9 @@ import axios from "../../../axios";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import { withRouter } from "react-router-dom";
 import Input from "../../../components/UI/Input/Input";
+import { connect } from "react-redux";
+import withErrorHandler from "../../../hoc/withErrorHandler";
+import * as actions from "../../../store/actions/index";
 class ContactData extends Component {
   state = {
     orderForm: {
@@ -93,7 +96,6 @@ class ContactData extends Component {
   };
   orderHandler = (event) => {
     event.preventDefault();
-    console.log(this.props.ingredients);
     const formData = {};
     for (let formElementIdentifier in this.state.orderForm) {
       formData[formElementIdentifier] = this.state.orderForm[
@@ -101,9 +103,9 @@ class ContactData extends Component {
       ].value;
     }
     alert("You Continue");
-    this.setState({ loading: true });
+    //this.setState({ loading: true });
     const order = {
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       price: this.props.price,
       orderData: formData,
     };
@@ -197,4 +199,16 @@ class ContactData extends Component {
     );
   }
 }
-export default ContactData;
+const mapStateToProps = (state) => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onOrderBurger: (orderData) =>
+      dispatch(actions.purchaseBurgerStart(orderData)),
+  };
+};
+export default connect(mapStateToProps)(withErrorHandler(ContactData, axios));
