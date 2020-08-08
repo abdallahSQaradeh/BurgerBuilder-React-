@@ -7,7 +7,6 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from "../../axios";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import burger from "../../components/Burger/Burger";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 class BurgerBuilder extends Component {
@@ -20,7 +19,6 @@ class BurgerBuilder extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.props);
     this.props.onInitIngredients();
   }
   updatePurchaseState(ingredients) {
@@ -76,7 +74,7 @@ class BurgerBuilder extends Component {
     ) : (
       <Spinner />
     );
-    console.log(this.props);
+
     if (this.props.ing) {
       burger = (
         <Aux>

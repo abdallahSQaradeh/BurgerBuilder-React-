@@ -4,7 +4,6 @@ import classes from "./ContactData.css";
 import witherrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import axios from "../../../axios";
 import Spinner from "../../../components/UI/Spinner/Spinner";
-import { withRouter } from "react-router-dom";
 import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
@@ -113,7 +112,7 @@ class ContactData extends Component {
     this.props.onOrderBurger(order, this.props.token);
   };
   inputChangedHandler(event, inputIdentifier) {
-    console.log(event.target.value);
+    //console.log(event.target.value);
 
     const updatedFormElement = updateobject(
       this.state.orderForm[inputIdentifier],
@@ -133,7 +132,7 @@ class ContactData extends Component {
     for (let inputIdentifier in updatedOrderForm) {
       formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
     }
-    console.log(updatedFormElement);
+   // console.log(updatedFormElement);
     this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
   }
   render() {

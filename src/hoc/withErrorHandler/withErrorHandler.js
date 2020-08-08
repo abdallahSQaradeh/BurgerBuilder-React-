@@ -1,7 +1,6 @@
 import Modal from "../../components/UI/Modal/Modal";
 import Aux from "../../hoc/Auxiliray";
 import React, { Component } from "react";
-import axios from "../../axios";
 const witherrorHandler = (WrappedComponent, axios) => {
   return class extends Component {
     state = { error: null };
@@ -33,11 +32,6 @@ const witherrorHandler = (WrappedComponent, axios) => {
       );
     }
     componentWillUnmount() {
-      console.log(
-        "Will Unmount",
-        this.requestInterceotor,
-        this.responseInterceotor
-      );
       axios.interceptors.request.eject(this.requestInterceotor);
       axios.interceptors.response.eject(this.responseInterceotor);
       //! this preventing memory leaks

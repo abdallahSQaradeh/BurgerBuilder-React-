@@ -15,7 +15,6 @@ class Layout extends Component {
     this.setState((prev, props) => ({
       showSideDrawer: !prev.showSideDrawer,
     }));
-    console.log(this.state.showSideDrawer);
   };
   render() {
     return (
@@ -38,8 +37,5 @@ const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
   };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {};
 };
 export default connect(mapStateToProps, null)(Layout);

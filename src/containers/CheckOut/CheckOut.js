@@ -3,14 +3,12 @@ import CheckOutSummary from "../../components/Order/CheckOutSummary/CheckOutSumm
 import { Route, Redirect } from "react-router-dom";
 import ContactData from "../CheckOut/ContactData/ContactData";
 import { connect } from "react-redux";
-import * as actions from "../../store/actions/index";
-import { purchaseInit } from "../../store/actions/order";
 class CheckOut extends Component {
   checkOutCancelled = () => {
     this.props.history.goBack();
   };
   checkOutContinued = () => {
-    console.log(this.props.match.path + "/contact-data");
+    //console.log(this.props.match.path + "/contact-data");
     this.props.history.replace("/check-out/contact-data");
   };
 

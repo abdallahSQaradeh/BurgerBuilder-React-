@@ -5,7 +5,6 @@ import classes from "./Auth.css";
 import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import { info } from "autoprefixer";
 import { Redirect } from "react-router-dom";
 import { checkValidity, updateobject } from "../../shared/utility";
 class Auth extends Component {
@@ -88,7 +87,6 @@ class Auth extends Component {
           touched={formElement.config.touched}
           shouldValidate={formElement.config.validation}
           invalid={!formElement.config.valid}
-          key={formElement.id}
           elementtype={formElement.config.elementType}
           elementConfig={formElement.config.elementConfig}
           Value={formElement.config.value}
@@ -127,7 +125,7 @@ class Auth extends Component {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onAuth: (email, password, isSignUp) => {
-      console.log(email, password);
+      //console.log(email, password);
       dispatch(actions.auth(email, password, isSignUp));
     },
     onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath("/")),

@@ -3,7 +3,7 @@ import Aux from "../../../hoc/Auxiliray";
 import Button from "../../UI/Button/Button";
 class OrderSummary extends Component {
   componentDidUpdate() {
-    console.log("order summary did ipdate");
+    // console.log("order summary did ipdate");
   }
   render() {
     this.ingredientSummary = Object.keys(this.props.ingredients).map(
