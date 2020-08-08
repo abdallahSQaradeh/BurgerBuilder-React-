@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
-
+import updateObject, { updateobject } from "../../../shared/utility";
 class ContactData extends Component {
   state = {
     orderForm: {
@@ -108,8 +108,9 @@ class ContactData extends Component {
       ingredients: this.props.ings,
       price: this.props.price,
       orderData: formData,
+      userId: this.props.userId,
     };
-    this.props.onOrderBurger(order);
+    this.props.onOrderBurger(order, this.props.token);
   };
 
   checkValidity(value, rules) {
@@ -131,15 +132,21 @@ class ContactData extends Component {
 
   inputChangedHandler(event, inputIdentifier) {
     console.log(event.target.value);
-    const updatedOrderForm = { ...this.state.orderForm }; // *this doesn't do deep clone, the nested opjects wouldn't clone ,however this clone the pointer not value so we need to clone them manualy
-    const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
-    updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.validation
+
+    const updatedFormElement = updateobject(
+      this.state.orderForm[inputIdentifier],
+      {
+        value: event.target.value,
+        valid: this.checkValidity(
+          event.target.value,
+          this.state.orderForm[inputIdentifier].validation
+        ),
+        touched: true,
+      }
     );
-    updatedFormElement.touched = true;
-    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    const updatedOrderForm = updateobject(this.state.orderForm, {
+      [inputIdentifier]: updatedFormElement,
+    }); // *this doesn't do deep clone, the nested opjects wouldn't clone ,however this clone the pointer not value so we need to clone them manualy
     let formIsValid = true;
     for (let inputIdentifier in updatedOrderForm) {
       formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
@@ -194,11 +201,14 @@ const mapStateToProps = (state) => {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
+    token: state.auth.token,
+    userId: state.auth.userId,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+    onOrderBurger: (orderData, token) =>
+      dispatch(actions.purchaseBurger(orderData, token)),
   };
 };
 export default connect(
